@@ -1,0 +1,41 @@
+class ListNode:
+    def __init__(self, key=-1, value=-1):
+        self.key = key
+        self.value = value
+        self.next = None
+
+
+class MyHashMap:
+
+    def __init__(self):
+        self.set = [ListNode() for _ in range(10**3)]
+
+    def put(self, key: int, value: int) -> None:
+        curr = self.set[key % len(self.set)]
+
+        while curr.next:
+            if curr.next.key == key:
+                curr.next.value = value
+                return
+            curr = curr.next
+
+        curr.next = ListNode(key, value)
+
+    def get(self, key: int) -> int:
+        curr = self.set[key % len(self.set)]
+
+        while curr.next:
+            if curr.next.key == key:
+                return curr.next.value
+            curr = curr.next
+
+        return -1
+
+    def remove(self, key: int) -> None:
+        curr = self.set[key % len(self.set)]
+
+        while curr.next:
+            if curr.next.key == key:
+                curr.next = curr.next.next
+                return
+            curr = curr.next
